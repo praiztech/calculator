@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Calculator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" src="script.js"></script>
+</head>
+<body onresize="window_resize()">
+  <div class="alert"></div>
+  <h1>Web Calculator</h1>
+  <div class="container">
+    <div class="output">
+      <div id="A9"></div>
+      <div id="A8"></div>
+      <div id="A7"></div>
+      <div id="A6"></div>
+      <div id="A5"></div>
+      <div id="A4"></div>
+      <div id="A3"></div>
+      <div id="A2"></div>
+      <div id="A1"></div>
+      <div id="result"></div>
+    </div>
+    <div id="delete" class="symbol" onclick="clearAll()">
+      <div>&#67;</div>
+    </div>
+    <div id="backspace" class="symbol" onclick="backSpace()">
+      <div>&#9003;</div>
+    </div>
+    <div id="divide" class="symbol" onclick="getAndShowValue(this.id)">
+      <div>&#247;</div>
+    </div> 
+    <div id="times" class="symbol" onclick="getAndShowValue(this.id)">
+      <div>&#215;</div>
+    </div>
+    <div id="seven" class="number" onclick="getAndShowValue(this.id)">
+      <div>7</div>
+    </div>
+    <div id="eight" class="number" onclick="getAndShowValue(this.id)">
+      <div>8</div>
+    </div>
+    <div id="nine" class="number" onclick="getAndShowValue(this.id)">
+      <div>9</div>
+    </div>
+    <div id="minus" class="symbol" onclick="getAndShowValue(this.id)">
+      <div>&#8722;</div>
+    </div>
+    <div id="four" class="number" onclick="getAndShowValue(this.id)">
+      <div>4</div>
+    </div>
+    <div id="five" class="number" onclick="getAndShowValue(this.id)">
+      <div>5</div>
+    </div>
+    <div id="six" class="number" onclick="getAndShowValue(this.id)">
+      <div>6</div>
+    </div>
+    <div id="plus" class="symbol" onclick="getAndShowValue(this.id)">
+      <div>&#43;</div>
+    </div>
+    <div id="one" class="number" onclick="getAndShowValue(this.id)">
+      <div>1</div>
+    </div>
+    <div id="two" class="number" onclick="getAndShowValue(this.id)">
+      <div>2</div>
+    </div>
+    <div id="three" class="number" onclick="getAndShowValue(this.id)">
+      <div>3</div>
+    </div>
+    <div id="equals" class="symbol" onclick="calculateAndShowResult()">
+      <div>&#61;</div>
+    </div>
+    <div id="zero" class="number" onclick="getAndShowValue(this.id)">
+      <div>0</div>
+    </div>
+    <div id="period" class="number" onclick="getAndShowValue(this.id)">
+      <div>&#46;</div>
+    </div>
+  </div>
+</body>
+</html>
