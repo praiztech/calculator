@@ -1,0 +1,460 @@
+@charset "UTF-8";
+
+/* CSS RESET */
+/* html5doctor.com/html-5-reset-stylesheet/ 
+ */
+html, body, div, span, object, iframe, 
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, 
+a, abbr, address, cite, code, 
+del, dfn, em, img, ins, kbd, q, s, samp, 
+small, strong, sub, sup, var, b, u, i, 
+dl, dt, dd, ol, ul, li, 
+fieldset, form, label, legend, 
+table, caption, tbody, tfoot, thead, tr, th, td, 
+main, article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary, 
+time, mark, audio, video {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  /*outline: 0;*/
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+} 
+
+ol, ul {
+  list-style: none; 
+} 
+
+blockquote, q {
+  quotes: none;
+} 
+
+blockquote:before, blockquote:after, 
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+ins {
+  text-decoration: none;
+}
+
+del {
+  text-decoration: line-through;
+}
+ 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* HTML5 display reset for older browsers */ 
+main, article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, 
+nav, section {
+  display: block; 
+}
+
+/* BODY */
+html {
+  font-size: 16px;
+}
+
+body {
+  background-image: url(background.png);
+  color: #fff;
+  font: 100% Arial, Georgia, sans-serif;
+}
+
+h1 {
+  color: #000;
+  text-align: center;
+  font: bold small-caps 2em Georgia, sans-serif;
+  padding: 0.5em;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container {
+  width: 72.5%;
+  margin: 0 auto;
+  padding-bottom: 2.5%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 35px 70px 75px 75px 75px 75px 75px;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 35px 70px 75px 75px 75px 75px 75px;
+}
+
+.container > div:first-child {
+  background-color: #000;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 4;
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.symbol {
+  background-color: #00243e;
+  font-size: 1.25em;
+}
+
+.number {
+  background-color: #000836;
+}
+
+.symbol, .number {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#outputt {
+  background-color: #000;
+  padding-top: 0.5em;
+  padding-right: 0.33em;
+  text-align: right;
+  font-size: 2em;
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 4;
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+#delete {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  grid-column: 1;
+  grid-row: 3;
+}
+
+#backspace {
+  -ms-grid-row: 3;
+  -ms-grid-column: 2;
+  grid-column: 2;
+  grid-row: 3;
+}
+
+#divide {
+  -ms-grid-row: 3;
+  -ms-grid-column: 3;
+  grid-column: 3;
+  grid-row: 3;
+}
+
+#times {
+  -ms-grid-row: 3;
+  -ms-grid-column: 4;
+  grid-column: 4;
+  grid-row: 3;
+}
+
+#seven {
+  -ms-grid-row: 4;
+  -ms-grid-column: 1;
+  grid-column: 1;
+  grid-row: 4;
+}
+
+#eight {
+  -ms-grid-row: 4;
+  -ms-grid-column: 2;
+  grid-column: 2;
+  grid-row: 4;
+}
+
+#nine {
+  -ms-grid-row: 4;
+  -ms-grid-column: 3;
+  grid-column: 3;
+  grid-row: 4;
+}
+
+#minus {
+  -ms-grid-row: 4;
+  -ms-grid-column: 4;
+  grid-column: 4;
+  grid-row: 4;
+}
+
+#four {
+  -ms-grid-row: 5;
+  -ms-grid-column: 1;
+  grid-column: 1;
+  grid-row: 5;
+}
+
+#five {
+  -ms-grid-row: 5;
+  -ms-grid-column: 2;
+  grid-column: 2;
+  grid-row: 5;
+}
+
+#six {
+  -ms-grid-row: 5;
+  -ms-grid-column: 3;
+  grid-column: 3;
+  grid-row: 5;
+}
+
+#plus {
+  -ms-grid-row: 5;
+  -ms-grid-column: 4;
+  grid-column: 4;
+  grid-row: 5;
+}
+
+#one {
+  -ms-grid-row: 6;
+  -ms-grid-column: 1;
+  grid-column: 1;
+  grid-row: 6;
+}
+
+#two {
+  -ms-grid-row: 6;
+  -ms-grid-column: 2;
+  grid-column: 2;
+  grid-row: 6;
+}
+
+#three {
+  -ms-grid-row: 6;
+  -ms-grid-column: 3;
+  grid-column: 3;
+  grid-row: 6;
+}
+
+#equals {
+  -ms-grid-row: 6;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 4;
+  grid-column: 4;
+  grid-row: 6 / -1;
+}
+
+#zero {
+  -ms-grid-row: 7;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-column: 1 / 3;
+  grid-row: 7;
+}
+
+#period {
+  -ms-grid-row: 7;
+  -ms-grid-column: 3;
+  grid-column: 3;
+  grid-row: 7;
+}
+
+.inputt {
+  font-size: 0.75em;
+  padding-top: 0.3em;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row-reverse;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.inputt > div {
+  text-align: center;
+  flex: 1 3 auto;
+}
+
+@supports not ((display:-ms-grid) or (display:grid)) {
+  .container {
+    width: 75%;
+  }
+  
+  .container > div:first-child {
+    width: 100%;
+    height: 35px;
+  }
+  
+  #outputt {
+    width: 100%;
+    height: 70px;
+    box-sizing: border-box;
+  }
+  
+  .container > div:nth-child(n+3) {
+    width: 25%;
+    height: 75px;
+    float: left;
+    border: 1px solid #000;
+    box-sizing: border-box;
+  }
+  
+  #zero {
+    width: 50%;
+    border: 1px solid #000;
+    box-sizing: border-box;
+  }
+  
+  #equals {
+    height: 150px;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    float: right;
+  }
+}
+
+.alert {
+  display: none;
+  width: 50%;
+  background-color: #fff;
+  color: #000;
+  font-size: 1em;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  padding: 5%;
+  margin: 0 auto;
+  border: 2px solid #000;
+  position: absolute;
+  top: 47.5%;
+  left: 20%;
+  z-index: 100;
+}
+
+@media only screen and (max-width:600px) and (orientation:landscape) {
+
+  .alert {
+    width: 35%;
+    top: 50%;
+    left: 27.5%;
+  }
+} 
+
+.closebtn {
+  font-weight: bold;
+  font-size: 1.5em;
+  float: right;
+  position: relative;
+  top: -0.75em;
+  cursor: pointer;
+}
+
+@media only screen and (min-width:480px) {
+
+  .container {
+    width: 62.5%;
+    padding-bottom: 5%;
+  }
+
+  .inputt {
+    font-size: 0.95em;
+  }
+
+  #outputt {
+    padding-right: 0.45em;
+  }
+}
+
+@media only screen and (min-width:601px) {
+
+  h1 {
+    font-size: 1.75em;
+    padding-bottom: 2.5%;
+  }
+
+  .container {
+    width: 50%;
+  }
+
+  .inputt {
+    font-size: 1.05em;
+  }
+
+  #outputt {
+    padding-right: 0.35em;
+  }
+}
+
+@media only screen and (min-width:768px) {
+
+  html {
+    font-size: 20px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .container {
+    width: 37.5%;
+  }
+
+  .inputt {
+    font-size: 0.65em;
+  }
+
+  #outputt {
+    padding-right: 0.25em;
+  }
+}
+
+@media only screen and (min-width:1023px) {
+  
+  h1 {
+    font-size: 1.25em;
+    padding: 0.5em 0 0.25em 0;
+  }
+  
+  .container {
+    width: 27.5%;
+    padding-top: 1.25%;
+  }
+
+  #outputt {
+    padding-right: 0.2em;
+  }
+}
+
+@media only screen and (min-width:1440px) {
+
+  h1 {
+    font-size: 1.75em;
+    padding: 0.75em 0 0.15em 0;
+  }
+
+  .container {
+    width: 15.5%;
+    padding-top: 1.25%;
+  }
+}
