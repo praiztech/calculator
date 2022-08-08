@@ -1,0 +1,615 @@
+/* FONTS */
+@font-face {
+  font-family: 'source_serif_proitalic';
+  src: url('/fonts/sourceserifpro-italic-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: optional;
+}
+
+@font-face {
+  font-family: 'lobsterregular';
+  src: url('/fonts/lobster-regular-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: optional;
+}
+
+/* RESET */
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0; /*:focus styles have been implemented*/
+  font: inherit;
+}
+
+/* GENERAL */
+:root {
+  font-size: 62.5%; /* reset 4 easier sizing w/out impacting text resize */
+  --italic-font: 'source_serif_proitalic';
+  --reg-font: 'lobsterregular';
+  --base-font-size: 1.6rem;
+  --base-spacing: 1.25rem;
+  --app-width: 30rem;
+  --app-height: 64rem;
+}
+
+:root[data-theme="light"] {
+  --page-bg: #fefefe;
+  --page-txt: #333;
+  --switch-bg: #666;
+  --switch-border: #ddd;
+  --switch-knob-bg: #fefefe;
+  --switch-knob-border: #666;
+  --open-dialog-btn-border: #666;
+  --open-dialog-btn-label-border: #000;
+  --svg-icon-bg: #eef;
+  --svg-keys-bg: #666;
+  --svg-keys-border: #bbb;
+  --calc-bg: #eef;
+  --calc-border: #999;
+  --calc-shadow: #666;
+  --calc-title: #666;
+  --display-bg: #fcfcfa;
+  --display-border: 0.3rem groove #eee;
+  --btn-txt: #000836;
+  --btn-focus-border: inset -0.2rem 0 0.3rem #111, inset 0 -0.2rem 0.3rem #111;
+  --btn-active-border: #eef;
+  --symbtn-bg: #d0d6e9;
+  --symbtn-focus-bg: #eee;
+  --symbtn-border: #aaa #999 #bbb #aaa;
+  --numbtn-bg: #e0e2e9;
+  --numbtn-focus-bg: #f1f1f1;
+  --numbtn-border: #999 #888 #aaa #999;
+  --dialog-bg: #f4f2f2;
+  --dialog-border: #ddd;
+  --dialog-txt: #011472;
+  --dialog-kbd-bg: #eef;
+  --dialog-kbd-border: #999;
+  --cloz-dialog-btn-border: #333;
+  --cloz-dialog-btn-outline: #001320;
+}
+
+:root[data-theme="dark"] {
+  --page-bg: #030004;
+  --page-txt: #ccc;
+  --switch-bg: #eef;
+  --switch-border: #666;
+  --switch-knob-bg: #666;
+  --switch-knob-border: #ddd;
+  --open-dialog-btn-border: #bbb;
+  --open-dialog-btn-label-border: #fefefe;
+  --svg-icon-bg: #2a2f37;
+  --svg-keys-bg: #eef;
+  --svg-keys-border: #666;
+  --calc-bg: #666;
+  --calc-border: #444;
+  --calc-shadow: #333;
+  --calc-title: #eee;
+  --display-bg: #2a2f37;
+  --display-border: 0.3rem ridge #999;
+  --btn-txt: #ddd;
+  --btn-focus-border: inset -0.2rem 0 0.3rem #000, inset 0 -0.2rem 0.3rem #000;
+  --btn-active-border: #666;
+  --symbtn-bg: #00243e;
+  --symbtn-focus-bg: #3a5464;
+  --symbtn-border: #001320 #013354 #02497a #000f1a;
+  --numbtn-bg: #000836;
+  --numbtn-focus-bg: #3a4764;
+  --numbtn-border: #000624 #010c4c #011472 #000315;
+  --dialog-bg: #3a4764;
+  --dialog-border: #666;
+  --dialog-txt: #ddd;
+  --dialog-kbd-bg: #00243e;
+  --dialog-kbd-border: #ddd;
+  --cloz-dialog-btn-border: #000;
+  --cloz-dialog-btn-outline: #ddd;
+}
+
+body {
+  --h1-font-size: calc(var(--base-font-size) * 1.5);
+  line-height: 1.5;
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+  color: var(--page-txt);
+  background-color: var(--page-bg);
+  display: flex;
+  justify-content: center;
+}
+
+body[data-prevent-scroll] { /* prevents scrolling of bg contents when shtcut-dialog is open */
+  overflow-y: hidden;
+}
+
+button,
+kbd {
+  line-height: 1;
+}
+
+strong {
+  font-weight: bold;
+}
+
+[data-visually-hidden] {
+  border: 0;
+  clip-path: inset(50%);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.content { /* used div instead of pseudo-element to add class 4 ease of element selection */ 
+  width: var(--app-width);
+  height: var(--app-height);
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER */
+.pg-header {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--base-spacing) 0;
+  font-family: var(--italic-font, serif);
+  font-size: var(--base-font-size);
+}
+
+/* Theme Switch */
+.theme-widget {
+  --ctrl-base-size: 2.4rem;
+  display: flex;
+}
+
+.theme-widget label {
+  cursor: pointer;
+}
+
+.controls {
+  margin: 0 calc(var(--base-spacing) * 0.4);
+  position: relative;
+}
+
+.switch {
+  display: inline-block;
+  width: calc(var(--ctrl-base-size) * 2);
+  height: var(--ctrl-base-size);
+  border-radius: calc(var(--ctrl-base-size) * 0.5);
+}
+
+.theme-widget[data-hover] .switch, 
+.theme-widget:focus-within .switch {
+  border: 0.5rem double var(--switch-border);
+}
+
+.switch::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--ctrl-base-size);
+  height: var(--ctrl-base-size);
+  border: 0.5rem double var(--switch-knob-border);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+input {
+  appearance: none;
+  opacity: 0.00001;
+  position: absolute;
+  width: var(--ctrl-base-size);
+  height: var(--ctrl-base-size);
+  top: 0;
+  z-index: 3;
+  cursor: pointer;
+}
+
+input:first-of-type {
+  left: 0;
+}
+
+input:last-of-type {
+  left: var(--ctrl-base-size);
+}
+
+input:checked ~ .switch {
+  background-color: var(--switch-bg);
+  transition: background-color 0.4s ease-in-out;
+}
+
+input:checked ~ .switch::after {
+  background-color: var(--switch-knob-bg);
+  transition: background-color 0.4s ease-in-out;
+}
+
+input:first-of-type:checked ~ .switch::after {
+  transform: translateX(0);
+  transition: transform 0.4s ease-in-out;
+}
+
+input:last-of-type:checked ~ .switch::after {
+  transform: translateX(var(--ctrl-base-size));
+  transition: transform 0.4s ease-out;
+}
+
+/* Keyboard Shortcuts Dialog */
+button.open-dialog {
+  --open-dialog-btn-width: 6rem; /* svg width + border width * 2 */
+  --open-dialog-btn-height: 3rem; /* svg height + border height * 2 */
+  --open-dialog-btn-border-width: 0.1rem;
+  --label-arrow-width: 1.2rem;
+  --label-arrow-height: 0.8rem;
+  width: var(--open-dialog-btn-width);
+  height: var(--open-dialog-btn-height);
+  border: var(--open-dialog-btn-border-width) solid var(--open-dialog-btn-border);
+  border-radius: 0.4rem;
+  color: inherit; /* btns dont inherit text color unless specified */
+  cursor: pointer;
+  position: relative;
+}
+
+button.open-dialog[data-hover],
+button.open-dialog:focus {
+  box-shadow: 0 0 0 var(--open-dialog-btn-border-width) var(--page-bg), 0 0 0 calc(var(--open-dialog-btn-border-width) * 2) var(--open-dialog-btn-border);
+}
+
+button.open-dialog svg {
+  width: 100%;
+  height: 100%;
+}
+
+button.open-dialog svg .icon-bg {
+  fill: var(--svg-icon-bg);
+}
+
+button.open-dialog svg .icon-keys {
+  fill: var(--svg-keys-bg);
+  stroke: var(--svg-keys-border);
+}
+
+button.open-dialog::after {
+  content: "";
+  position: absolute;
+  top: var(--open-dialog-btn-height);
+  left: calc(var(--open-dialog-btn-width) * 0.5);
+  width: var(--label-arrow-width);
+  height: var(--label-arrow-height);
+  background-color: var(--page-bg);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  z-index: 3;
+}
+ 
+button.open-dialog .label {
+  --label-vertical-spacing: calc(var(--base-spacing) * 0.2);
+  --label-horizontal-spacing: calc(var(--base-spacing) * 0.3125);
+  position: absolute;
+  top: calc(var(--open-dialog-btn-height) + var(--label-arrow-height) - 0.2rem);
+  right: 0;
+  min-width: max-content;
+  background-color: var(--page-bg);
+  box-shadow: 0 0 calc(var(--label-arrow-height) + 0.2rem) var(--open-dialog-btn-label-border);
+  border: 0.2rem solid transparent;
+  border-radius: 0.5rem;
+  padding: var(--label-vertical-spacing) var(--label-horizontal-spacing);
+  font-size: calc(var(--base-font-size) * 1.2);
+  z-index: 2;
+}
+
+.shtcut-dialog:not([data-open]) {
+  display: none;
+}
+
+.shtcut-dialog {
+  --dialog-spacing: calc(var(--base-spacing) * 0.8);
+  position: fixed;
+  top: 1rem;
+  width: calc(var(--app-width) * 1.05);
+  max-height: 100vh;
+  border: 0.2rem solid var(--dialog-border);
+  padding: var(--dialog-spacing);
+  color: var(--dialog-txt);
+  background-color: var(--dialog-bg);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.shtcut-dialog h1 {
+  padding: calc(var(--dialog-spacing) * 0.5) 0;
+  font-size: var(--h1-font-size);
+  font-weight: bold;
+}
+
+.shtcut-dialog .txt-wrapper {
+  flex: 1 1 auto;
+  overflow: auto;
+  text-align: left;
+  line-height: 1.75;
+}
+
+.shtcut-dialog p {
+  font-size: calc(var(--base-font-size) * 1.25);
+  margin-bottom: var(--dialog-spacing);
+}
+
+.shtcut-dialog [data-no-wrap] {
+  white-space: nowrap;
+}
+
+.shtcut-dialog .calc-btn {
+  font-weight: 700;
+}
+
+.shtcut-dialog kbd {
+  background-color: var(--dialog-kbd-bg);
+  border-radius: 0.3rem;
+  border: 0.1rem solid var(--dialog-kbd-border);
+  box-shadow: 0 0.1rem 0.1rem #000, inset 0 0.1rem 0 #fefefe;
+  padding: calc(var(--dialog-spacing) * 0.2) calc(var(--dialog-spacing) * 0.4);
+  font-family: revert;
+}
+
+.shtcut-dialog button {
+  align-self: center;
+  margin-top: var(--dialog-spacing);
+  border: 0.1rem solid var(--cloz-dialog-btn-border);
+  border-radius: 0.3rem;
+  box-shadow: 0.2rem 0.2rem 0.3rem var(--cloz-dialog-btn-border);
+  padding: calc(var(--dialog-spacing) * 0.5);
+  color: var(--btn-txt);
+  font-size: var(--base-font-size);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.shtcut-dialog button[data-hover], 
+.shtcut-dialog button:focus {
+  outline: 0.2rem dashed var(--cloz-dialog-btn-outline);
+  outline-offset: 0.3rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.75);
+  z-index: 4;
+}
+
+/* MAIN */
+.calculator {
+  --calc-border-width: 0.1rem 0.4rem 0.5rem 0.1rem;
+  flex: 1 1 0;
+  padding: calc(var(--base-spacing) * 1.5);
+  background-color: var(--calc-bg);
+  border-radius: 2%;
+  border-width: var(--calc-border-width);
+  border-style: solid inset inset solid;
+  border-color: var(--calc-border);
+  box-shadow: 0.1rem 0.2rem 0.2rem var(--calc-shadow);
+  transform: skew(-1deg, 0.15deg);
+  display: flex;
+  flex-direction: column;
+}
+
+.calculator-title {
+  font: bold var(--h1-font-size) var(--reg-font, sans-serif);
+  letter-spacing: 0.12rem;
+  color: var(--calc-title);
+  padding-top: calc(var(--base-spacing) * 0.4);
+  padding-bottom: calc(var(--base-spacing) * 0.75);
+}
+
+/* Display */
+.display {
+  flex: 1 1 0;
+  border: var(--display-border);
+  border-radius: 3.5%;
+  background-color: var(--display-bg);
+  font-family: var(--reg-font, sans-serif);
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+preview-data {
+  flex: 2 1 0;
+}
+
+output {
+  flex: 3 1 0;
+}
+
+output [data-visible] {
+  --output-font-size: calc(var(--base-font-size) * 3);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--base-spacing);
+  font-size: var(--output-font-size);
+}
+
+/* Keypad */
+.keypad {
+  flex: 3 1 0;
+  transform: skewX(0.15deg);
+  padding-top: calc(var(--base-spacing) * 1.5);
+  display: grid;
+  grid-template: repeat(5, 1fr) / repeat(4, 1fr);
+  grid-gap: calc(var(--base-spacing) * 0.4);
+}
+
+.keypad [data-key="Clear"] {
+  grid-column: span 2;
+}
+
+.keypad [data-key="Delete"] {
+  grid-column: span 2;
+}
+
+.keypad button {
+  --keypad-btn-border-width: 0.2rem 0.3rem 0.3rem 0.2rem;
+  border-width: var(--keypad-btn-border-width);
+  border-style: solid inset outset solid;
+  border-radius: 9%;
+  color: var(--btn-txt);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button[data-operator] {
+  border-color: var(--symbtn-border);
+  background-color: var(--symbtn-bg);
+  font-size: calc(var(--base-font-size) * 1.75);
+  font-family: var(--italic-font, serif);
+}
+
+button[data-operand] {
+  border-color: var(--numbtn-border);
+  background-color: var(--numbtn-bg);
+  font-size: calc(var(--base-font-size) * 1.5); 
+  font-family: var(--reg-font, sans-serif);
+}
+
+/* corrects for blurring due to use of transform property on calculator */
+button[data-key="-"] {
+  font-weight: 600;
+}
+
+.keypad button[data-hover],
+.keypad button:focus {
+  box-shadow: var(--btn-focus-border);
+  font-weight: 900;
+}
+
+button[data-operand][data-hover], 
+button[data-operand]:focus {
+  background-color: var(--numbtn-focus-bg);
+}
+
+button[data-operator][data-hover], 
+button[data-operator]:focus {
+  background-color: var(--symbtn-focus-bg);
+}
+
+/* contrast themes */
+@media (forced-colors: active) {
+  .switch {
+    border: 0.2rem solid;
+  }
+ 
+  button[data-hover],
+  button:focus {
+    border-color: CanvasText;
+  }
+
+  button.open-dialog svg .icon-bg,
+  button.open-dialog svg .icon-keys {
+    fill: Canvas;
+  }
+  
+  button.open-dialog svg .icon-keys {
+    stroke: CanvasText;
+  }
+
+  button.open-dialog::after {
+    background-color: ButtonBorder;
+  }
+
+  button.open-dialog[data-hover]::after,
+  button.open-dialog:focus::after {
+    background-color: CanvasText;
+  }
+
+  button.open-dialog[data-hover] .label,
+  button.open-dialog:focus .label {
+    border-color: CanvasText;
+    font-weight: 900;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .keypad button[data-active], 
+  .keypad button:active {
+    border: 0.1rem solid var(--btn-active-border);
+  }
+}
+
+/* FOOTER */
+footer {
+  padding-top: var(--base-spacing);
+  font-size: var(--base-font-size);
+}
+
+
+@media (min-width: 23.4375em) and (min-height: 48em) { /* mobile phones and budget laptops */
+  :root {
+    --base-font-size: 2rem;
+    --app-width: 36rem;
+    --app-height: 76rem;
+  }
+}
+
+@media (min-width: 48em) and (min-height: 64em) { /* tablets and mainstream laptops */
+  :root {
+    --base-font-size: 2.4rem;
+    --base-spacing: 2.25rem;
+    --app-width: 48rem;
+    --app-height: 100rem;
+  }
+
+  .theme-widget {
+    --ctrl-base-size: 3rem;
+  }
+
+  button.open-dialog {
+    --open-dialog-btn-width: 7.45rem;
+    --open-dialog-btn-height: 3.7rem;
+    --label-arrow-width: 1.5rem;
+    --label-arrow-height: 1rem;
+  }
+}
+
+@media (min-width: 141em) and (min-height: 90em) { /* high-end laptops and 4K displays */
+  :root {
+    --base-font-size: 3.2rem;
+    --base-spacing: 3rem;
+    --app-width: 64rem;
+    --app-height: 140rem;
+  }
+
+  .theme-widget {
+    --ctrl-base-size: 4.2rem;
+  }
+
+  button.open-dialog {
+    --open-dialog-btn-width: 10.55rem;
+    --open-dialog-btn-height: 5.3rem;
+    --open-dialog-btn-border-width: 0.2rem;
+    --label-arrow-width: 2rem;
+    --label-arrow-height: 1.4rem;
+  }
+
+  .calculator {
+    --calc-border-width: 0.2rem 0.5rem 0.6rem 0.2rem;
+  }
+
+  .keypad button {
+    --keypad-btn-border-width: 0.2rem 0.5rem 0.5rem 0.2rem;
+  }
+}
