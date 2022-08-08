@@ -1,52 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Online Calculator</title>
   <meta charset="UTF-8">
-  <meta name="author" content="Praise Agbabiaka">
-  <meta name="description" content="A basic online calculator app built with plain html and css and vanilla javascript">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="format-detection" content="telephone=no"> <!-- fixes Edge treating decimal numbers as links -->
-  <script type="text/javascript" src="assets/scripts/main.js" defer></script>
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
-  <link rel="stylesheet" type="text/css" href="assets/styles/style.css">
+  <title>Calculator</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="author" content="Praise Agbabiaka">
+  <meta name="description" content="An accessible calculator that supports keyboard-only navigation as well as use with contrast themes, screen readers and other assistive technologies.">
+  <link rel="preload" href="/fonts/sourceserifpro-italic-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/fonts/lobster-regular-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/scripts/main.js"></script>
+  <script nomodule>
+    document.body.style.fontSize = '2em';
+    document.body.innerHTML = "<p>This calculator won't work properly in the current version of this browser. Update your browser to use the calculator.</p><p> Please note that this calculator doesn't work in Internet Explorer.</p>";
+  </script>
 </head>
 <body>
-  <header>
-    <h1>Calculator</h1>
-  </header>
-  <main class="calculator" role="main">
-    <div class="input-display">
-      <div id="A1"></div>
-      <div id="A2"></div>
-      <div id="A3"></div>
-      <div id="A4"></div>
-      <div id="A5"></div>
-      <div id="A6"></div>
-      <div id="A7"></div>
+  <noscript>
+    <p>This calculator doesn't work without JavaScript enabled. Please enable JavaScript to use the calculator.</p>
+  </noscript>
+  <div class="content" role="presentation">
+    <!--role="presentation" coz it's the direct child of body that contains header, main, footer-->
+    <header class="pg-header">
+      <fieldset class="theme-widget">
+        <legend data-visually-hidden>Select the page theme</legend>
+        <label for="light">light theme</label>
+        <div class="controls">
+          <input type="radio" name="theme" value="light" id="light">
+          <input type="radio" name="theme" value="dark" id="dark">
+          <span class="switch" aria-hidden="true"></span>
+        </div>
+        <label for="dark">dark theme</label>
+      </fieldset>
+      <button type="button" class="open-dialog">
+        <span class="label">keyboard shortcuts</span>
+        <span role="presentation" data-visually-hidden>(opens dialog)</span>
+        <!--role="presentation" to prevent multiple virtual cursor stops on screen readers-->
+        <svg viewBox="0 0 58 28" focusable="false" aria-hidden="true">
+          <rect x="0" y="0" rx="4" width="58" height="28" class="icon-bg"/>
+          <g stroke-width="2" class="icon-keys">
+            <rect x="4" y="4" rx="1" width="5" height="4"/>
+            <rect x="13" y="4" rx="1" width="5" height="4"/>
+            <rect x="22" y="4" rx="1" width="5" height="4"/>
+            <rect x="31" y="4" rx="1" width="5" height="4"/>
+            <rect x="40" y="4" rx="1" width="5" height="4"/>
+            <rect x="49" y="4" rx="1" width="5" height="4"/>
+            <rect x="4" y="12" rx="1" width="5" height="4"/>
+            <rect x="13" y="12" rx="1" width="5" height="4"/>
+            <rect x="22" y="12" rx="1" width="5" height="4"/>
+            <rect x="31" y="12" rx="1" width="5" height="4"/>
+            <rect x="40" y="12" rx="1" width="14" height="4"/>
+            <rect x="4" y="20" rx="1" width="5" height="4"/>
+            <rect x="13" y="20" rx="1" width="32" height="4"/>
+            <rect x="49" y="20" rx="1" width="5" height="4"/>
+          </g>
+        </svg>
+      </button>
+    </header>
+    <main aria-labelledby="calculator-title" class="calculator">
+      <h1 id="calculator-title" class="calculator-title">Calculator</h1>
+      <div class="display">
+        <preview-data aria-hidden="true"></preview-data>
+        <output id="outputt" aria-live="polite" aria-atomic="true">
+          <span data-visually-hidden>No Output</span>
+          <span data-visible></span>
+        </output>
+      </div>
+      <fieldset class="keypad" aria-controls="outputt">
+        <legend data-visually-hidden>Keypad</legend>
+        <button type="button" data-key="7" data-operand>7</button>
+        <button type="button" data-key="8" data-operand>8</button>
+        <button type="button" data-key="9" data-operand>9</button>
+        <button type="button" data-key="+" data-operator>&plus;</button>
+        <button type="button" data-key="4" data-operand>4</button>
+        <button type="button" data-key="5" data-operand>5</button>
+        <button type="button" data-key="6" data-operand>6</button>
+        <button type="button" data-key="-" data-operator>&minus;</button>
+        <button type="button" data-key="1" data-operand>1</button>
+        <button type="button" data-key="2" data-operand>2</button>
+        <button type="button" data-key="3" data-operand>3</button>
+        <button type="button" data-key="*" data-operator>&times;</button>
+        <button type="button" data-key="0" data-operand>0</button>
+        <button type="button" data-key="." data-operand>.</button>
+        <button type="button" data-key="/" data-operator>&divide;</button>
+        <button type="button" data-key="=" data-operator>&equals;</button>
+        <button type="button" data-key="Clear" data-operator>Reset</button>
+        <button type="button" data-key="Delete" data-operator>Delete</button>
+      </fieldset>
+    </main>
+    <footer>
+      <small>Designed & Built by <strong>Praise Agbabiaka</strong></small>
+    </footer>
+  </div>
+  <div role="dialog" aria-modal="true" aria-labelledby="dialog-title" class="shtcut-dialog" tabindex="-1">
+    <h1 id="dialog-title">Keyboard Shortcuts</h1>
+    <div class="txt-wrapper">
+      <p>
+        You can activate calculator buttons by pressing <kbd>alt</kbd> and the corresponding key on the keyboard. For example, press <span data-no-wrap><kbd>alt</kbd> + <kbd>1</kbd></span> on the keyboard to activate <span class="calc-btn">1</span> in the calculator.
+      </p>
+      <p>
+        <strong>Note!</strong> To activate <span class="calc-btn">Delete</span> calculator button, press <span data-no-wrap><kbd>alt</kbd> + <kbd>backspace</kbd></span> or <span data-no-wrap><kbd>alt</kbd> + <kbd>delete</kbd></span>. To activate <span class="calc-btn">Reset</span> calculator button, press <span data-no-wrap><kbd>alt</kbd> + <kbd>R</kbd></span> or <span data-no-wrap><kbd>alt</kbd> + <kbd>C</kbd></span> or <span data-no-wrap><kbd>alt</kbd> + <kbd>clear</kbd></span>.
+      </p>
     </div>
-    <div id="outputt"></div>
-    <div id="delete" class="symbol">&#67;</div>
-    <div id="backspace" class="symbol">&#9003;</div>
-    <div id="divide" class="inputt symbol">&#247;</div> 
-    <div id="times" class="inputt symbol">&#215;</div>
-    <div id="seven" class="inputt number">7</div>
-    <div id="eight" class="inputt number">8</div>
-    <div id="nine" class="inputt number">9</div>
-    <div id="minus" class="inputt symbol">&#8722;</div>
-    <div id="four" class="inputt number">4</div>
-    <div id="five" class="inputt number">5</div>
-    <div id="six" class="inputt number">6</div>
-    <div id="plus" class="inputt symbol">&#43;</div>
-    <div id="one" class="inputt number">1</div>
-    <div id="two" class="inputt number">2</div>
-    <div id="three" class="inputt number">3</div>
-    <div id="zero" class="inputt number">0</div>
-    <div id="period" class="inputt number">&#46;</div>
-    <div id="equals" class="symbol">&#61;</div>
-  </main>
-  <footer>
-    <small>&copy; 2020 PraizTech Inc. All Rights Reserved.</small>
-  </footer>
+    <button type="button">OK</button>
+  </div>
 </body>
 </html>
