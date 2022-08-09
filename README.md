@@ -28,7 +28,7 @@ This web application features a light and dark theme design. Its layout was buil
 
 ### Live Site
 
-[View the Live Site](https://praiztech.github.io/calculator-app)
+[View the Live Site](https://accessible-calculator.netlify.app/)
 
 ## Technologies Used
 
