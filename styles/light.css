@@ -1,0 +1,40 @@
+:root {
+  --page-bg: #fefefe;
+  --page-txt: #333;
+  --switch-bg: #666;
+  --switch-border: #ddd;
+  --switch-knob-bg: #fefefe;
+  --switch-knob-border: #666;
+  --open-dialog-btn-border: #666;
+  --open-dialog-btn-label-border: #000;
+  --svg-icon-bg: #eef;
+  --svg-keys-bg: #666;
+  --svg-keys-border: #bbb;
+  --calc-bg: #eef;
+  --calc-border: #999;
+  --calc-shadow: #666;
+  --calc-title: #666;
+  --display-bg: #fcfcfa;
+  --display-border: 0.3rem groove #eee;
+  --btn-txt: #000836;
+  --btn-focus-border: inset -0.2rem 0 0.3rem #111, inset 0 -0.2rem 0.3rem #111;
+  --btn-active-border: #eef;
+  --symbtn-bg: #d0d6e9;
+  --symbtn-focus-bg: #eee;
+  --symbtn-border: #aaa #999 #bbb #aaa;
+  --numbtn-bg: #e0e2e9;
+  --numbtn-focus-bg: #f1f1f1;
+  --numbtn-border: #999 #888 #aaa #999;
+  --dialog-bg: #f4f2f2;
+  --dialog-border: #ddd;
+  --dialog-txt: #011472;
+  --dialog-kbd-bg: #eef;
+  --dialog-kbd-border: #999;
+  --cloz-dialog-btn-border: #333;
+  --cloz-dialog-btn-outline: #001320;
+}
+
+/* custom properties aren't inherited by pseudo-elements */
+button.open-dialog::after {
+  --label-arrow-bg: #fefefe;
+}

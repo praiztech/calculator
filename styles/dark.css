@@ -1,0 +1,40 @@
+:root {
+  --page-bg: #030004;
+  --page-txt: #ccc;
+  --switch-bg: #eef;
+  --switch-border: #666;
+  --switch-knob-bg: #666;
+  --switch-knob-border: #ddd;
+  --open-dialog-btn-border: #bbb;
+  --open-dialog-btn-label-border: #fefefe;
+  --svg-icon-bg: #2a2f37;
+  --svg-keys-bg: #eef;
+  --svg-keys-border: #666;
+  --calc-bg: #666;
+  --calc-border: #444;
+  --calc-shadow: #333;
+  --calc-title: #eee;
+  --display-bg: #2a2f37;
+  --display-border: 0.3rem ridge #999;
+  --btn-txt: #ddd;
+  --btn-focus-border: inset -0.2rem 0 0.3rem #000, inset 0 -0.2rem 0.3rem #000;
+  --btn-active-border: #666;
+  --symbtn-bg: #00243e;
+  --symbtn-focus-bg: #3a5464;
+  --symbtn-border: #001320 #013354 #02497a #000f1a;
+  --numbtn-bg: #000836;
+  --numbtn-focus-bg: #3a4764;
+  --numbtn-border: #000624 #010c4c #011472 #000315;
+  --dialog-bg: #3a4764;
+  --dialog-border: #666;
+  --dialog-txt: #ddd;
+  --dialog-kbd-bg: #00243e;
+  --dialog-kbd-border: #ddd;
+  --cloz-dialog-btn-border: #000;
+  --cloz-dialog-btn-outline: #ddd;
+}
+
+/* custom properties aren't inherited by pseudo-elements */
+button.open-dialog::after {
+  --label-arrow-bg: #030004;
+}
