@@ -1,23 +1,10 @@
-export {setDefaultTheme, changeTheme};
+(function syncWidget2DefaultTheme() {
+  //check if dark mode is activated as OS/UA preference
+  let defaultTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.getElementById(defaultTheme).click(); //synchronises theme widget with OS/UA preference
+})();
 
-const rootElem = document.documentElement;
-
-function setDefaultTheme() {
-  let theme = localStorage.getItem('theme');
-  if (theme === null) {
-    //check if dark mode is activated as OS/platform preference
-    theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-  document.getElementById(theme).click();
-  rootElem.setAttribute('data-theme', theme);
-}
-
-function changeTheme() {
-  let theme = document.querySelector('input[name="theme"]:checked').value;
-  rootElem.setAttribute('data-theme', theme); 
-  
-  //save user theme choice
-  try {
-    localStorage.setItem('theme', theme);
-  } catch {}
-}
+document.querySelector('.theme-widget').addEventListener('change', () => {
+  let newTheme = document.querySelector('input[name="theme"]:checked').value;
+  document.documentElement.setAttribute('data-theme', newTheme);
+});
