@@ -17,10 +17,9 @@ An accessible calculator built with HTML, CSS and vanilla JavaScript.
 
 The aim of this project is to design, build and deploy an accessible calculator capable of performing basic mathematical operations, i.e., addition, subtraction, multiplication and division. This web application implements the following key accessibility features:
 - Keyboard-only navigation support and keyboard bypass mechanism using shortcuts
-- Zoom/magnification support
 - Contrast themes support
 - Screen reader use support
-- Speech input software use support
+- Voice input software use support
 
 ### Design
 
