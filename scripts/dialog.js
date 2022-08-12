@@ -9,10 +9,10 @@ export default function openDialog() {
   requestAnimationFrame(() => dialog.focus()); //requestAnimationFrame to ensure VoiceOver moves focus to dialog
 
   //used div instead of pseudo-element to allow event handler attachment
-  const overlay = document.createElement('div');
-  overlay.classList.add('overlay');
-  overlay.addEventListener('click', clozDialog);
-  dialog.before(overlay);
+  const backDrop = document.createElement('div');
+  backDrop.classList.add('backdrop');
+  backDrop.addEventListener('click', clozDialog);
+  dialog.before(backDrop);
 
   //for screen readers that dont support aria-modal
   pgContentCtrls.forEach((ctrl) => {
@@ -26,7 +26,7 @@ export default function openDialog() {
 
 function clozDialog() {
   dialog.removeAttribute('data-open');
-  dialog.previousElementSibling.remove(); //removes overlay
+  dialog.previousElementSibling.remove(); //removes backDrop
   pgContentCtrls.forEach((ctrl) => {
     ctrl.removeAttribute('tabindex');
   });
