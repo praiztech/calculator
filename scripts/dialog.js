@@ -9,10 +9,10 @@ export default function openDialog() {
   requestAnimationFrame(() => dialog.focus()); //requestAnimationFrame to ensure VoiceOver moves focus to dialog
 
   //used div instead of pseudo-element to allow event handler attachment
-  let overlay = document.createElement('div');
+  const overlay = document.createElement('div');
   overlay.classList.add('overlay');
-  dialog.before(overlay);
   overlay.addEventListener('click', clozDialog);
+  dialog.before(overlay);
 
   //for screen readers that dont support aria-modal
   pgContentCtrls.forEach((ctrl) => {
