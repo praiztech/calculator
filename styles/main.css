@@ -469,7 +469,7 @@ output [data-visible] {
   grid-gap: calc(var(--base-spacing) * 0.4);
 }
 
-.keypad [data-key="Clear"] {
+.keypad [data-key="Reset"] {
   grid-column: span 2;
 }
 

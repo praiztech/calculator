@@ -8,7 +8,7 @@ export default function processInput(evt) {
     case 'Delete':
       backSpace();
       break;
-    case 'Clear':
+    case 'Reset':
       reSet();
       break;
     case '=':
