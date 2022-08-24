@@ -78,41 +78,42 @@ function computebyOperatorPrecedence(dataArr, errormsg1, errormsg2) {
 }
 
 function compute(operand1, operator, operand2) {
-  if ((!operand1.includes('e') && operand1.includes('.')) || (!operand2.includes('e') && operand2.includes('.'))
-  ) return computedFloat(operand1, operator, operand2)
-  return computedIntOrExp(operand1, operator, operand2);
+  let op1 = operand1.toString(), op2 = operand2.toString(); //ensures that subresults are converted to strings
+  if ((!op1.includes('e') && op1.includes('.')) || (!op2.includes('e') && op2.includes('.'))
+  ) return computedFloat(op1, operator, op2)
+  return computedIntOrExp(op1, operator, op2);
 }
 
 //processes floats as integers to avoid extra decimal places
-function computedFloat(operand1, operator, operand2) {
-  let op1DecimalLength = operand1.includes('.') ? operand1.split('.')[1].length : 0;
-  let op2DecimalLength = operand2.includes('.') ? operand2.split('.')[1].length : 0;
+function computedFloat(op1, operator, op2) {
+  let op1DecimalLength = op1.includes('.') ? op1.split('.')[1].length : 0;
+  let op2DecimalLength = op2.includes('.') ? op2.split('.')[1].length : 0;
   let correctionFactor = ((operator === '*') ?
                           Math.pow(10, op1DecimalLength + op2DecimalLength) :
                           Math.pow(10, Math.max(op1DecimalLength, op2DecimalLength)));
   switch (operator) {
     case '*':
-      return ((operand1 * Math.pow(10, op1DecimalLength)) * (operand2 * Math.pow(10, op2DecimalLength))) / correctionFactor;
+      return ((op1 * Math.pow(10, op1DecimalLength)) * (op2 * Math.pow(10, op2DecimalLength))) / correctionFactor;
     case '/':
-      if (+operand2 === 0 || +operand2 === -0) return 'ZERO DIVISOR';
-      return (operand1 * correctionFactor) / (operand2 * correctionFactor);
+      if (+op2 === 0 || +op2 === -0) return 'ZERO DIVISOR';
+      return (op1 * correctionFactor) / (op2 * correctionFactor);
     case '+':
-      return ((operand1 * correctionFactor) + (operand2 * correctionFactor)) / correctionFactor;
+      return ((op1 * correctionFactor) + (op2 * correctionFactor)) / correctionFactor;
     case '-':
-      return ((operand1 * correctionFactor) - (operand2 * correctionFactor)) / correctionFactor;
+      return ((op1 * correctionFactor) - (op2 * correctionFactor)) / correctionFactor;
   }
 }
 
-function computedIntOrExp(operand1, operator, operand2) {
+function computedIntOrExp(op1, operator, op2) {
   switch (operator) {
     case '*':
-      return +operand1 * +operand2;
+      return +op1 * +op2;
     case '/':
-      return (+operand2 === 0 || +operand2 === -0) ? 'ZERO DIVISOR' : +operand1 / +operand2;
+      return (+op2 === 0 || +op2 === -0) ? 'ZERO DIVISOR' : +op1 / +op2;
     case '+':
-      return +operand1 + +operand2;
+      return +op1 + +op2;
     case '-':
-      return +operand1 - +operand2;
+      return +op1 - +op2;
   }
 }
 

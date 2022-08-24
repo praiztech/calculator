@@ -6,7 +6,7 @@ export default function handleShtcutKeyPress(evt) {
   switch (evt.type) {
     case 'keydown':
       evt.preventDefault();
-      handleShtcutKeydown(evt.ctrlKey, evt.shiftKey, evt.key);
+      handleShtcutKeydown(evt.ctrlKey, evt.altKey, evt.key);
       break;
     case 'keyup':
       handleShtcutKeyup(evt.target);
@@ -14,17 +14,15 @@ export default function handleShtcutKeyPress(evt) {
   }
 }
 
-function handleShtcutKeydown(ctrlKeyPressed, shiftKeyPressed, key) {
-  if (!ctrlKeyPressed) return;
-
+function handleShtcutKeydown(ctrlKeyPressed, altKeyPressed, key) {
   let keyValue;
   switch (key) {
     case 'Delete':
     case 'Backspace':
-      keyValue = shiftKeyPressed ? 'Reset' : 'Delete';
+      if (altKeyPressed) keyValue = 'Reset';
       break;
     default:
-      keyValue = key;
+      if (ctrlKeyPressed) keyValue = key;
       break;
   }
   const btn4key = document.querySelector(`[data-key="${keyValue}"]`);
