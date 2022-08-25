@@ -15,23 +15,25 @@ export default function handleShtcutKeyPress(evt) {
 }
 
 function handleShtcutKeydown(ctrlKeyPressed, altKeyPressed, key) {
-  let keyValue;
-  switch (key) {
-    case 'R':
-    case 'r':
-      if (altKeyPressed) keyValue = 'Reset';
-      break;
-    case 'D':
-    case 'd':
-      if (altKeyPressed) keyValue = 'Delete';
-      break;
-    default:
-      if (ctrlKeyPressed) keyValue = key;
-      break;
-  }
+  let keyValue = getKeyValue(ctrlKeyPressed, altKeyPressed, key);
+  if (!keyValue) return; //wrong key combination
+  
   const btn4key = document.querySelector(`[data-key="${keyValue}"]`);
   btn4key.focus();
   btn4key.setAttribute('data-active', 'true');
+}
+
+function getKeyValue(ctrlKeyPressed, altKeyPressed, key) {
+  switch (key) {
+    case 'R':
+    case 'r':
+      if (altKeyPressed) return 'Reset';
+    case 'D':
+    case 'd':
+      if (altKeyPressed) return 'Delete';
+    default:
+      if (ctrlKeyPressed) return key;
+  }
 }
 
 function handleShtcutKeyup(target) { //target is the keypad btn focused by the keydown evt
