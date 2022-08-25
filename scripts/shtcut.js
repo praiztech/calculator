@@ -16,6 +16,7 @@ export default function handleShtcutKeyPress(evt) {
 
 function handleShtcutKeydown(ctrlKeyPressed, altKeyPressed, key) {
   let keyValue = getKeyValue(ctrlKeyPressed, altKeyPressed, key);
+  console.log(keyValue);
   if (!keyValue) return; //wrong key combination
   
   const btn4key = document.querySelector(`[data-key="${keyValue}"]`);
