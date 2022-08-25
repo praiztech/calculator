@@ -364,6 +364,7 @@ button.open-dialog .label {
 
 .shtcut-dialog .calc-btn {
   font-weight: 700;
+  font-family: var(--italic-font);
 }
 
 .shtcut-dialog kbd {
