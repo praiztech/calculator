@@ -28,11 +28,14 @@ function getKeyValue(ctrlKeyPressed, altKeyPressed, key) {
     case 'R':
     case 'r':
       if (altKeyPressed) return 'Reset';
+      break;
     case 'D':
     case 'd':
       if (altKeyPressed) return 'Delete';
+      break;
     default:
       if (ctrlKeyPressed) return key;
+      break;
   }
 }
 
