@@ -1,4 +1,4 @@
-const shtcutKeys = ['0','1','2','3','4','5','6','7','8','9','.','+','-','*','/','=','Backspace','Delete'];
+const shtcutKeys = ['0','1','2','3','4','5','6','7','8','9','.','+','-','*','/','=','d','D','r','R'];
 
 export default function handleShtcutKeyPress(evt) {
   if (!(shtcutKeys.includes(evt.key))) return; //listens for relevant keypress both from numpad and main keypad
@@ -17,13 +17,13 @@ export default function handleShtcutKeyPress(evt) {
 function handleShtcutKeydown(ctrlKeyPressed, altKeyPressed, key) {
   let keyValue;
   switch (key) {
-    case 'Delete':
-    case 'Backspace':
-      if (altKeyPressed) {
-        keyValue = 'Reset';
-      } else if (ctrlKeyPressed) {
-        keyValue = 'Delete';
-      }
+    case 'R':
+    case 'r':
+      if (altKeyPressed) keyValue = 'Reset';
+      break;
+    case 'D':
+    case 'd':
+      if (altKeyPressed) keyValue = 'Delete';
       break;
     default:
       if (ctrlKeyPressed) keyValue = key;
