@@ -19,7 +19,11 @@ function handleShtcutKeydown(ctrlKeyPressed, altKeyPressed, key) {
   switch (key) {
     case 'Delete':
     case 'Backspace':
-      if (altKeyPressed) keyValue = 'Reset';
+      if (altKeyPressed) {
+        keyValue = 'Reset';
+      } else if (ctrlKeyPressed) {
+        keyValue = 'Delete';
+      }
       break;
     default:
       if (ctrlKeyPressed) keyValue = key;
