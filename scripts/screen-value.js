@@ -3,25 +3,28 @@ export default function setScreenValue(val, srData=false) {
   return setDefaultScreenValue(val);
 }
 
+//ensures screen readers pronounce mathematical symbols esp minus correctly
 function setSrDataValue(val) {
   switch (val) {
     case '*':
-      return 'times';
+      return '\u00d7';
     case '/':
-      return 'divide';
+      return '\u00f7';
     case '+':
-      return 'plus';
+      return '\u002b';
     case '-':
-      return 'minus';
+      return '\u2212';
+    default:
+      return val;
   }
 }
 
 function setDefaultScreenValue(val) {
   switch (val) {
     case '*':
-      return '×';
+      return '\u00d7';
     case '/':
-      return '÷';
+      return '\u00f7';
     default: 
       if (val.length > 7) return largeResultAsInputScreenValue(val); //only a result can be an input of > 7 characters
       
