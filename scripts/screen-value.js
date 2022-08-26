@@ -1,10 +1,5 @@
-export default function setScreenValue(val, srData=false) {
-  if (srData) return setSrDataValue(val);
-  return setDefaultScreenValue(val);
-}
-
-//ensures screen readers pronounce mathematical symbols esp minus correctly
-function setSrDataValue(val) {
+//ensures that the right mathematical symbols are displayed and screen readers pronounce them esp minus correctly
+export default function setSrDataValue(val) {
   switch (val) {
     case '*':
       return '\u00d7';
@@ -15,17 +10,6 @@ function setSrDataValue(val) {
     case '-':
       return '\u2212';
     default:
-      return val;
-  }
-}
-
-function setDefaultScreenValue(val) {
-  switch (val) {
-    case '*':
-      return '\u00d7';
-    case '/':
-      return '\u00f7';
-    default: 
       if (val.length > 7) return largeResultAsInputScreenValue(val); //only a result can be an input of > 7 characters
       
       if (val.endsWith('.')) val = val.slice(0, -1); //remove trailing decimal point on operands, if present
