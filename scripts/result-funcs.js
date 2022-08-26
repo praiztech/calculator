@@ -33,7 +33,7 @@ function computeResult(dataArr) {
     resizeOutputFont(1.3); //reduce output font size to accommodate error message
     setLastComputedResult(resultStr);
   } else {
-    dataStr = dataArr.map(setScreenValue).join(' ');
+    dataStr = dataArr.map((dataValue) => setScreenValue(dataValue, 'srData')).join(' ');
     result2Display = (resultStr.length <= maxResultLength) ? 
                       `=${resultStr}` : 
                       `=${approxResult(resultStr, maxResultLength)}`;

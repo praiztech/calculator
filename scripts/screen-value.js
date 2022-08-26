@@ -1,4 +1,22 @@
-export default function setScreenValue(val) {
+export default function setScreenValue(val, srData=false) {
+  if (srData) return setSrDataValue(val);
+  return setDefaultScreenValue(val);
+}
+
+function setSrDataValue(val) {
+  switch (val) {
+    case '*':
+      return 'times';
+    case '/':
+      return 'divide';
+    case '+':
+      return 'plus';
+    case '-':
+      return 'minus';
+  }
+}
+
+function setDefaultScreenValue(val) {
   switch (val) {
     case '*':
       return '×';
