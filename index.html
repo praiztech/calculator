@@ -23,8 +23,7 @@
   <noscript>
     <p>This calculator doesn't work without JavaScript enabled. Please enable JavaScript to use the calculator.</p>
   </noscript>
-  <div class="content" role="presentation">
-    <!--role="presentation" coz it's the direct child of body that contains header, main, footer-->
+  <div class="content">
     <header class="pg-header">
       <fieldset class="theme-widget">
         <legend data-visually-hidden>Select the page theme</legend>
@@ -61,8 +60,8 @@
         </svg>
       </button>
     </header>
-    <main aria-labelledby="calculator-title" class="calculator">
-      <h1 id="calculator-title" class="calculator-title">Calculator</h1>
+    <main class="calculator">
+      <h1 class="calculator-title">Calculator</h1>
       <div class="display">
         <preview-data aria-hidden="true"></preview-data>
         <output id="outputt" aria-live="polite" aria-atomic="true">
