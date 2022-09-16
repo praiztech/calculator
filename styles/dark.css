@@ -3,8 +3,6 @@
   --page-txt: #ccc;
   --switch-bg: #eef;
   --switch-border: #666;
-  --switch-knob-bg: #666;
-  --switch-knob-border: #ddd;
   --open-dialog-btn-border: #bbb;
   --open-dialog-btn-label-border: #fefefe;
   --svg-icon-bg: #2a2f37;
@@ -35,6 +33,14 @@
 }
 
 /* custom properties aren't inherited by pseudo-elements */
+.switch::after {
+  --switch-knob-border: #ddd;
+}
+
+input:checked ~ .switch::after {
+  --switch-knob-bg: #666;
+}
+
 button.open-dialog::after {
   --label-arrow-bg: #030004;
 }

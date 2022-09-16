@@ -44,8 +44,6 @@
   --page-txt: #333;
   --switch-bg: #666;
   --switch-border: #ddd;
-  --switch-knob-bg: #fefefe;
-  --switch-knob-border: #666;
   --open-dialog-btn-border: #666;
   --open-dialog-btn-label-border: #000;
   --svg-icon-bg: #eef;
@@ -80,8 +78,6 @@
   --page-txt: #ccc;
   --switch-bg: #eef;
   --switch-border: #666;
-  --switch-knob-bg: #666;
-  --switch-knob-border: #ddd;
   --open-dialog-btn-border: #bbb;
   --open-dialog-btn-label-border: #fefefe;
   --svg-icon-bg: #2a2f37;
@@ -165,12 +161,17 @@ strong {
 
 /* Theme Switch */
 .theme-widget {
-  --ctrl-base-size: 2.4rem;
   display: flex;
 }
 
 .theme-widget label {
   cursor: pointer;
+}
+
+/* custom properties aren't inherited by pseudo-elements */
+.controls,
+.switch::after {
+  --ctrl-base-size: 2.4rem;
 }
 
 .controls {
@@ -188,6 +189,14 @@ strong {
 .theme-widget[data-hover] .switch, 
 .theme-widget:focus-within .switch {
   border: 0.5rem double var(--switch-border);
+}
+
+[data-theme="light"] .switch::after {
+  --switch-knob-border: #666;
+}
+
+[data-theme="dark"] .switch::after {
+  --switch-knob-border: #ddd;
 }
 
 .switch::after {
@@ -226,6 +235,14 @@ input:checked ~ .switch {
   transition: background-color 0.4s ease-in-out;
 }
 
+[data-theme="light"] input:checked ~ .switch::after {
+  --switch-knob-bg: #fefefe;
+}
+
+[data-theme="dark"] input:checked ~ .switch::after {
+  --switch-knob-bg: #666;
+}
+
 input:checked ~ .switch::after {
   background-color: var(--switch-knob-bg);
   transition: background-color 0.4s ease-in-out;
@@ -242,8 +259,6 @@ input:last-of-type:checked ~ .switch::after {
 }
 
 /* Keyboard Shortcuts Dialog */
-
-/* custom properties aren't inherited by pseudo-elements */
 button.open-dialog,
 button.open-dialog::after {
   --open-dialog-btn-width: 6rem; /* svg width + border width * 2 */
