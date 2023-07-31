@@ -61,7 +61,7 @@ function processed1stOperandValue(val, lastData) {
 }
 
 function processedSubsequentOperandValue(val, lastOperand) {
-  if (lastOperand.length === 7 || //operands should have 7 characters max
+  if (lastOperand.length === 5 || //operands should have 5 characters max
       lastOperand.includes('.') && val === '.' //operands should have only one decimal point
     ) return {response: 'invalid'};
   

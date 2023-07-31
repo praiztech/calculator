@@ -1,13 +1,16 @@
-import handleShtcutKeyPress from "./shtcut.js";
+import { handleShtcutKeyPress } from "./shtcut.js";
 
-export default function handleKeyboardPress(evt) {
+export function handleKeyboardPress(evt) {
+  // if shtcut dialog is open, ignore other keyboard event handlers
   if (document.querySelector('.shtcut-dialog').hasAttribute('data-open')) {
-    evt.type === 'keydown' ? handleDialogKeydown(evt) : null;
-  } else if (document.querySelector('.keypad').contains(evt.target) && 
-            (evt.key === ' ' || evt.key === 'Enter')) {
-    simulateKeypadBtnClick(evt);
+    evt.type === 'keydown' ? handleDialogKeydown(evt) : null; 
   } else {
-    handleShtcutKeyPress(evt);
+    const keypad = document.querySelector('.keypad');
+    if (keypad.contains(evt.target) && (evt.key === ' ' || evt.key === 'Enter')) {
+      simulateKeypadBtnClick(evt);
+    } else if (keypad.getAttribute('role') === 'application') {
+      handleShtcutKeyPress(evt);
+    }
   }
 }
 
@@ -15,13 +18,14 @@ function handleDialogKeydown(evt) {
   if (evt.repeat) return; //prevents multiple keydown handling on a long-key-press
   
   const clozDialogBtn = document.querySelector('.shtcut-dialog button');
+  const activateDialogCheckbox = document.querySelector('.shtcut-dialog input[type="checkbox"]');
   switch (evt.key) {
     case 'Escape':
       clozDialogBtn.click();
       break;
     case 'Tab':
       evt.preventDefault();
-      clozDialogBtn.focus();
+      document.activeElement === activateDialogCheckbox ? clozDialogBtn.focus() : activateDialogCheckbox.focus();
       break;
   }
 }

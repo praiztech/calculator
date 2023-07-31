@@ -7,9 +7,9 @@
   <meta name="color-scheme" content="light dark">
   <meta name="author" content="Praise Agbabiaka">
   <meta name="description" content="An accessible calculator that supports keyboard-only navigation as well as use with contrast themes, screen readers and other assistive technologies.">
-  <link rel="preload" href="/fonts/sourceserifpro-italic-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/fonts/Poppins-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/fonts/lobster-regular-webfont.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="/styles/light.css">
+  <link rel="stylesheet" media="(prefers-color-scheme: light)" href="/styles/light.css">
   <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="/styles/dark.css">
   <link rel="stylesheet" href="/styles/main.css">
   <script type="module" src="/scripts/theme.js"></script>
@@ -25,53 +25,24 @@
   </noscript>
   <div class="content">
     <header class="pg-header">
-      <fieldset class="theme-widget">
-        <legend data-visually-hidden>Select the page theme</legend>
-        <label for="light">light theme</label>
-        <span role="presentation" class="controls">
-        <!--role="presentation" removes the custom control from Firefox's accessibility tree-->
-          <input type="radio" name="theme" value="light" id="light">
-          <input type="radio" name="theme" value="dark" id="dark">
-          <span class="switch" aria-hidden="true"></span>
-        </span>
-        <label for="dark">dark theme</label>
-      </fieldset>
-      <button type="button" class="open-dialog">
-        <span role="presentation" class="label">keyboard shortcuts</span>
-        <span role="presentation" data-visually-hidden>(opens dialog)</span>
-        <!--role="presentation" to prevent multiple virtual cursor stops on screen readers-->
-        <svg viewBox="0 0 58 28" focusable="false" aria-hidden="true">
-          <rect x="0" y="0" rx="4" width="58" height="28" class="icon-bg"/>
-          <g stroke-width="2" class="icon-keys">
-            <rect x="4" y="4" rx="1" width="5" height="4"/>
-            <rect x="13" y="4" rx="1" width="5" height="4"/>
-            <rect x="22" y="4" rx="1" width="5" height="4"/>
-            <rect x="31" y="4" rx="1" width="5" height="4"/>
-            <rect x="40" y="4" rx="1" width="5" height="4"/>
-            <rect x="49" y="4" rx="1" width="5" height="4"/>
-            <rect x="4" y="12" rx="1" width="5" height="4"/>
-            <rect x="13" y="12" rx="1" width="5" height="4"/>
-            <rect x="22" y="12" rx="1" width="5" height="4"/>
-            <rect x="31" y="12" rx="1" width="5" height="4"/>
-            <rect x="40" y="12" rx="1" width="14" height="4"/>
-            <rect x="4" y="20" rx="1" width="5" height="4"/>
-            <rect x="13" y="20" rx="1" width="32" height="4"/>
-            <rect x="49" y="20" rx="1" width="5" height="4"/>
-          </g>
-        </svg>
+      <button type="button" class="keyboard-shortcuts" id="keyboard-shortcuts">Keyboard Shortcuts</button>
+      <button type="button" class="theme-toggle">
+        <span class="toggle-ctrl" aria-hidden="true"></span>
+        <!--role="none" prevents multiple cursor stops in Firefox with NVDA-->
+        <span role="none">dark theme</span>
       </button>
     </header>
     <main class="calculator">
       <h1 class="calculator-title">Calculator</h1>
       <div class="display">
         <preview-data aria-hidden="true"></preview-data>
-        <output id="outputt" aria-live="polite" aria-atomic="true">
+        <output id="outputt" role="status">
           <span data-visually-hidden>No Output</span>
           <span data-visible></span>
         </output>
       </div>
-      <fieldset class="keypad" aria-controls="outputt">
-        <legend data-visually-hidden>Keypad</legend>
+      <div role="group" aria-labelledby="keypad-title" aria-controls="outputt" class="keypad">
+        <span id="keypad-title" hidden>Keypad</span>
         <button type="button" data-key="7" data-operand>7</button>
         <button type="button" data-key="8" data-operand>8</button>
         <button type="button" data-key="9" data-operand>9</button>
@@ -92,21 +63,23 @@
         <button type="button" data-key="Delete" data-operator>Delete</button>
       </fieldset>
     </main>
-    <footer>
-        <small>Designed & Built by <strong>Praise Agbabiaka</strong></small>
-    </footer>
+    <footer><small>Designed & Built by <strong>Praise Agbabiaka</strong></small></footer>
   </div>
-  <div role="dialog" aria-modal="true" aria-labelledby="dialog-title" class="shtcut-dialog" tabindex="-1">
-    <h1 id="dialog-title">Keyboard Shortcuts</h1>
+  <div role="dialog" aria-modal="true" aria-labelledby="dialog-title" class="shtcut-dialog">
+    <h1 id="dialog-title" tabindex="-1">Keyboard Shortcuts</h1>
     <div class="txt-wrapper">
       <p>
-        You can activate the calculator's number and mathematical symbol buttons by pressing <kbd>ctrl</kbd> and the corresponding key on the keyboard. For example, press <span data-no-wrap><kbd>ctrl</kbd> + <kbd>1</kbd></span> on the keyboard to activate <span class="calc-btn">1</span> in the calculator.
+        You can enable keyboard shortcuts by activating the "Enable Shortcuts" checkbox and moving focus to the first button in the keypad. This allows you to activate keypad buttons by pressing the corresponding key on the keyboard. For example, pressing <kbd>1</kbd> on the keyboard activates <span class="calc-btn">1</span> in the calculator when keyboard shortcuts is enabled.
       </p>
       <p>
-        <strong>Note!</strong> To activate the calculator's <span class="calc-btn">Delete</span> button, press <span data-no-wrap><kbd>alt</kbd> + <kbd>D</kbd></span>. To activate the calculator's <span class="calc-btn">Reset</span> button, press <span data-no-wrap><kbd>alt</kbd> + <kbd>R</kbd></span>.
+        <strong>Note!</strong> To activate the calculator's <span class="calc-btn">Delete</span> button, press <kbd>backspace</kbd> or <kbd>delete</kbd>. To activate the calculator's <span class="calc-btn">Reset</span> button, press <kbd>shift</kbd> + <kbd>backspace</kbd> or <kbd>shift</kbd> + <kbd>delete</kbd>.
       </p>
+      <div>
+        <input type="checkbox" name="shortcut" id="activate-shortcut">
+        <label for="activate-shortcut">Enable Shortcuts</label>
+      </div>
     </div>
-    <button type="button">OK</button>
+    <button type="button">Close</button>
   </div>
 </body>
 </html>

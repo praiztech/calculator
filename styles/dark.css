@@ -33,14 +33,11 @@
 }
 
 /* custom properties aren't inherited by pseudo-elements */
-.switch::after {
-  --switch-knob-border: #ddd;
-}
-
-input:checked ~ .switch::after {
-  --switch-knob-bg: #666;
-}
-
-button.open-dialog::after {
-  --label-arrow-bg: #030004;
+button.theme-toggle::before, button.theme-toggle::after, .toggle-ctrl::before, .toggle-ctrl, .toggle-ctrl::after {
+  --very-light-gray: hsl(0 0% 100% / 75%);
+  --dark-gray: hsl(0 0% 40%);
+  --switch-bg: var(--very-light-gray);
+  --switch-border: var(--dark-gray);
+  --switch-knob-bg: var(--dark-gray);
+  --switch-knob-border: var(--very-light-gray);
 }

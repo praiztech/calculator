@@ -1,10 +1,13 @@
-(function syncWidget2DefaultTheme() {
-  //check if dark mode is activated as OS/UA preference
-  let defaultTheme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  document.getElementById(defaultTheme).click(); //synchronises theme widget with OS/UA preference
-})();
+const themeToggleButton = document.querySelector('button.theme-toggle');
 
-document.querySelector('.theme-widget').addEventListener('change', () => {
-  let newTheme = document.querySelector('input[name="theme"]:checked').value;
-  document.documentElement.setAttribute('data-theme', newTheme);
+//checks if dark mode is activated as OS/UA preference
+const defaultThemeIsDark = matchMedia('(prefers-color-scheme: dark)').matches;
+//synchronises screen reader output with default theme widget appearance
+themeToggleButton.setAttribute('aria-pressed', defaultThemeIsDark);
+
+themeToggleButton.addEventListener('click', (evt) => { // flip theme
+  const target = evt.currentTarget;
+  const newThemeIsDark = !(target.getAttribute('aria-pressed') === 'true');
+  target.setAttribute('aria-pressed', newThemeIsDark);
+  document.documentElement.setAttribute('data-theme', newThemeIsDark ? 'dark' : 'light');
 });

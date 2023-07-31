@@ -15,7 +15,7 @@ export default class PreviewData extends HTMLElement {
       span {
         flex: 1 1 auto;
         font-weight: 700;
-        font-size: calc(var(--base-font-size) * 0.95);
+        font-size: calc(var(--base-font-size) * 1.25);
       }
     `;
     fragment.append(shadowStyle);

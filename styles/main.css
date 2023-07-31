@@ -1,7 +1,7 @@
 /* FONTS */
 @font-face {
-  font-family: 'source_serif_proitalic';
-  src: url('/fonts/sourceserifpro-italic-webfont.woff2') format('woff2');
+  font-family: 'poppins';
+  src: url('/fonts/Poppins-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -31,8 +31,8 @@
 /* GENERAL */
 :root {
   font-size: 62.5%; /* reset 4 easier sizing w/out impacting text resize */
-  --italic-font: 'source_serif_proitalic';
-  --reg-font: 'lobsterregular';
+  --pry-font: 'lobsterregular';
+  --sec-font: 'poppins';
   --base-font-size: 1.6rem;
   --base-spacing: 1.25rem;
   --app-width: 30rem;
@@ -46,9 +46,6 @@
   --switch-border: #ddd;
   --open-dialog-btn-border: #666;
   --open-dialog-btn-label-border: #000;
-  --svg-icon-bg: #eef;
-  --svg-keys-bg: #666;
-  --svg-keys-border: #bbb;
   --calc-bg: #eef;
   --calc-border: #999;
   --calc-shadow: #666;
@@ -80,9 +77,6 @@
   --switch-border: #666;
   --open-dialog-btn-border: #bbb;
   --open-dialog-btn-label-border: #fefefe;
-  --svg-icon-bg: #2a2f37;
-  --svg-keys-bg: #eef;
-  --svg-keys-border: #666;
   --calc-bg: #666;
   --calc-border: #444;
   --calc-shadow: #333;
@@ -111,7 +105,7 @@ body {
   --h1-font-size: calc(var(--base-font-size) * 1.5);
   line-height: 1.5;
   text-align: center;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: var(--sec-font, sans-serif);
   color: var(--page-txt);
   background-color: var(--page-bg);
   display: flex;
@@ -122,6 +116,11 @@ body[data-prevent-scroll] { /* prevents scrolling of bg contents when shtcut-dia
   overflow-y: hidden;
 }
 
+button {
+  color: inherit;
+  cursor: pointer;
+}
+
 button,
 kbd {
   line-height: 1;
@@ -129,6 +128,10 @@ kbd {
 
 strong {
   font-weight: bold;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 [data-visually-hidden] {
@@ -151,189 +154,144 @@ strong {
 }
 
 /* HEADER */
+/* custom properties aren't inherited by pseudo-elements */
+.pg-header, button.theme-toggle::before, button.theme-toggle::after, .toggle-ctrl::before, .toggle-ctrl::after {
+  --ctrl-base-size: calc(var(--base-font-size) * 1.5);
+}
+
 .pg-header {
-  display: flex;
-  justify-content: space-between;
   padding: var(--base-spacing) 0;
-  font-family: var(--italic-font, serif);
-  font-size: var(--base-font-size);
+  font-size: calc(var(--base-font-size) * 0.9);
+  position: relative; /* for positioning of keyboard shortcuts button */
 }
 
 /* Theme Switch */
-.theme-widget {
+button.theme-toggle {
+  margin-left: auto;
+  position: relative; /* for positioning pseudo-elements for styling */
   display: flex;
-}
-
-.theme-widget label {
+  align-items: center;
+  gap: 0.2rem;
   cursor: pointer;
 }
 
-/* custom properties aren't inherited by pseudo-elements */
-.controls,
-.switch::after {
-  --ctrl-base-size: 2.4rem;
+/* button.theme-toggle::before for hover styling, button.theme-toggle::after for focus styling */
+[data-theme="light"] button.theme-toggle::before, [data-theme="light"] button.theme-toggle::after, [data-theme="light"] .toggle-ctrl::before, [data-theme="light"] .toggle-ctrl {
+  --dark-blue: hsl(207 26% 17%);
+  --very-light-gray: hsl(0 0% 100% / 75%);
+  --switch-bg: var(--dark-blue);
+  --switch-border: var(--very-light-gray);
+  --switch-knob-bg: var(--very-light-gray);
+  --switch-knob-border: var(--dark-blue);
 }
 
-.controls {
-  margin: 0 calc(var(--base-spacing) * 0.4);
-  position: relative;
+[data-theme="dark"] button.theme-toggle::before, [data-theme="dark"] button.theme-toggle::after, [data-theme="dark"] .toggle-ctrl::before, [data-theme="dark"] .toggle-ctrl {
+  --very-light-gray: hsl(0 0% 100% / 75%);
+  --dark-gray: hsl(0 0% 40%);
+  --switch-bg: var(--very-light-gray);
+  --switch-border: var(--dark-gray);
+  --switch-knob-bg: var(--dark-gray);
+  --switch-knob-border: var(--very-light-gray);
 }
 
-.switch {
-  display: inline-block;
+/* allows for hover styling distinct from focus styling so focus-visible can be utilized in supporting browsers */
+button.theme-toggle::before, button.theme-toggle::after {
+  content: "";
+  position: absolute;
+  /* top and left of auto ensures button pseudo-elements fit over toggle control */
   width: calc(var(--ctrl-base-size) * 2);
   height: var(--ctrl-base-size);
-  border-radius: calc(var(--ctrl-base-size) * 0.5);
+  border-radius: 10000000000000000px; 
+  border: 0.2rem solid transparent; /* for contrast themes */
+  z-index: 2;
 }
 
-.theme-widget[data-hover] .switch, 
-.theme-widget:focus-within .switch {
+button.theme-toggle:hover::before, button.theme-toggle:focus::after {
   border: 0.5rem double var(--switch-border);
 }
 
-[data-theme="light"] .switch::after {
-  --switch-knob-border: #666;
+/* ensures no focus styling from mouse click in browsers that support focus-visible, as hover styling is visible */
+button.theme-toggle:focus:not(:focus-visible)::after {
+  border: none;
 }
 
-[data-theme="dark"] .switch::after {
-  --switch-knob-border: #ddd;
+.toggle-ctrl {
+  width: calc(var(--ctrl-base-size) * 2);
+  height: var(--ctrl-base-size);
+  flex: 1 0 auto; /* ensures toggle control never shrinks below its base width */
+  border-radius: 10000000000000000px; /* hack to produce a perfect pill on rectangular elements */
+  background-color: var(--switch-bg);
+  transition: background-color 0.4s ease-in-out;
+  position: relative; /* for positioning toggle control knob */
 }
 
-.switch::after {
+/* toggle control knob */
+.toggle-ctrl::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: var(--ctrl-base-size);
   height: var(--ctrl-base-size);
+  background-color: var(--switch-knob-bg);
   border: 0.5rem double var(--switch-knob-border);
   border-radius: 50%;
-  z-index: 2;
-}
-
-input {
-  appearance: none;
-  opacity: 0.00001;
-  position: absolute;
-  width: var(--ctrl-base-size);
-  height: var(--ctrl-base-size);
-  top: 0;
   z-index: 3;
-  cursor: pointer;
 }
 
-input:first-of-type {
-  left: 0;
+button.theme-toggle[aria-pressed="true"] .toggle-ctrl::before {
+  transform: translateX(var(--ctrl-base-size));
+  transition: transform 0.4s ease-in-out;
 }
 
-input:last-of-type {
-  left: var(--ctrl-base-size);
-}
-
-input:checked ~ .switch {
-  background-color: var(--switch-bg);
-  transition: background-color 0.4s ease-in-out;
-}
-
-[data-theme="light"] input:checked ~ .switch::after {
-  --switch-knob-bg: #fefefe;
-}
-
-[data-theme="dark"] input:checked ~ .switch::after {
-  --switch-knob-bg: #666;
-}
-
-input:checked ~ .switch::after {
-  background-color: var(--switch-knob-bg);
-  transition: background-color 0.4s ease-in-out;
-}
-
-input:first-of-type:checked ~ .switch::after {
+button.theme-toggle[aria-pressed="false"] .toggle-ctrl::before {
   transform: translateX(0);
   transition: transform 0.4s ease-in-out;
 }
 
-input:last-of-type:checked ~ .switch::after {
-  transform: translateX(var(--ctrl-base-size));
-  transition: transform 0.4s ease-out;
+/* Keyboard Shortcuts */
+button.keyboard-shortcuts {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  height: var(--ctrl-base-size);
+  border: 0.2rem solid var(--dialog-border);
+  border-radius: 0.3rem;
+  padding: 0 calc(var(--base-spacing) * 0.25);
+  background-color: var(--dialog-bg);
+  font-weight: bold;
+  z-index: 3;
+  transform: translateY(-50rem);
+  transition: transform 0.4s ease-in-out;
 }
 
-/* Keyboard Shortcuts Dialog */
-button.open-dialog,
-button.open-dialog::after {
-  --open-dialog-btn-width: 6rem; /* svg width + border width * 2 */
-  --open-dialog-btn-height: 3rem; /* svg height + border height * 2 */
-}
-button.open-dialog {
-  --open-dialog-btn-border-width: 0.1rem;
-  width: var(--open-dialog-btn-width);
-  height: var(--open-dialog-btn-height);
-  border: var(--open-dialog-btn-border-width) solid var(--open-dialog-btn-border);
-  border-radius: 0.4rem;
-  color: inherit; /* btns dont inherit text color unless specified */
-  cursor: pointer;
-  position: relative;
-}
-
-button.open-dialog[data-hover],
-button.open-dialog:focus {
-  box-shadow: 0 0 0 var(--open-dialog-btn-border-width) var(--page-bg), 0 0 0 calc(var(--open-dialog-btn-border-width) * 2) var(--open-dialog-btn-border);
-}
-
-button.open-dialog svg {
-  width: 100%;
-  height: 100%;
-}
-
-button.open-dialog svg .icon-bg {
-  fill: var(--svg-icon-bg);
-}
-
-button.open-dialog svg .icon-keys {
-  fill: var(--svg-keys-bg);
-  stroke: var(--svg-keys-border);
-}
-
-button.open-dialog::after,
-button.open-dialog .label {
-  --label-arrow-width: 1.2rem;
-  --label-arrow-height: 0.8rem;
-}
-
-[data-theme="light"] button.open-dialog::after {
-  --label-arrow-bg: #fefefe;
-}
-
-[data-theme="dark"] button.open-dialog::after {
-  --label-arrow-bg: #030004;
-}
-
-button.open-dialog::after {
+button.keyboard-shortcuts:focus::before, button.keyboard-shortcuts:focus::after {
   content: "";
   position: absolute;
-  top: var(--open-dialog-btn-height);
-  left: calc(var(--open-dialog-btn-width) * 0.5);
-  width: var(--label-arrow-width);
-  height: var(--label-arrow-height);
-  background-color: var(--label-arrow-bg);
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-  z-index: 3;
+  top: 0.1rem;
+  bottom: 0.1rem;
+  width: 0.4rem;
+  border-color: currentColor;
+  border-top: 0.2rem solid;
+  border-bottom: 0.2rem solid;
 }
- 
-button.open-dialog .label {
-  --label-vertical-spacing: calc(var(--base-spacing) * 0.2);
-  --label-horizontal-spacing: calc(var(--base-spacing) * 0.3125);
-  position: absolute;
-  top: calc(var(--open-dialog-btn-height) + var(--label-arrow-height) - 0.2rem);
-  right: 0;
-  min-width: max-content;
-  background-color: var(--page-bg);
-  box-shadow: 0 0 calc(var(--label-arrow-height) + 0.2rem) var(--open-dialog-btn-label-border);
-  border: 0.2rem solid transparent;
-  border-radius: 0.5rem;
-  padding: var(--label-vertical-spacing) var(--label-horizontal-spacing);
-  font-size: calc(var(--base-font-size) * 1.2);
-  z-index: 2;
+
+button.keyboard-shortcuts:focus::before {
+  left: 0.1rem;
+  border-radius: 0.2rem 0 0 0.2rem;
+  border-left: 0.2rem solid;
+}
+
+button.keyboard-shortcuts:focus::after {
+  right: 0.1rem;
+  border-radius: 0 0.2rem 0.2rem 0;
+  border-right: 0.2rem solid;
+}
+
+/* [data-active] ensures keyboard shortcuts button is persistently visible when necessary */
+button.keyboard-shortcuts:focus, button.keyboard-shortcuts[data-active] {
+  transform: translateY(0);
 }
 
 .shtcut-dialog:not([data-open]) {
@@ -366,20 +324,20 @@ button.open-dialog .label {
   overflow: auto;
   text-align: left;
   line-height: 1.75;
+  font-size: var(--base-font-size);
 }
 
 .shtcut-dialog p {
-  font-size: calc(var(--base-font-size) * 1.25);
   margin-bottom: var(--dialog-spacing);
 }
 
-.shtcut-dialog [data-no-wrap] {
-  white-space: nowrap;
+.shtcut-dialog div {
+  padding-left: 0.2rem; /* to allow for checkbox focus styling */
 }
 
 .shtcut-dialog .calc-btn {
   font-weight: 700;
-  font-family: var(--italic-font);
+  font-family: var(--sec-font, sans-serif);
 }
 
 .shtcut-dialog kbd {
@@ -401,13 +359,14 @@ button.open-dialog .label {
   color: var(--btn-txt);
   font-size: var(--base-font-size);
   font-weight: bold;
-  cursor: pointer;
 }
 
 .shtcut-dialog button[data-hover], 
-.shtcut-dialog button:focus {
+.shtcut-dialog button:focus,
+.shtcut-dialog input[data-hover], 
+.shtcut-dialog input:focus {
   outline: 0.2rem dashed var(--cloz-dialog-btn-outline);
-  outline-offset: 0.3rem;
+  outline-offset: 0.2rem;
 }
 
 .backdrop {
@@ -437,7 +396,7 @@ button.open-dialog .label {
 }
 
 .calculator-title {
-  font: bold var(--h1-font-size) var(--reg-font, sans-serif);
+  font: bold var(--h1-font-size) var(--pry-font, sans-serif);
   letter-spacing: 0.12rem;
   color: var(--calc-title);
   padding-top: calc(var(--base-spacing) * 0.4);
@@ -450,7 +409,7 @@ button.open-dialog .label {
   border: var(--display-border);
   border-radius: 3.5%;
   background-color: var(--display-bg);
-  font-family: var(--reg-font, sans-serif);
+  font-family: var(--pry-font, sans-serif);
   line-height: 1;
   display: flex;
   flex-direction: column;
@@ -499,7 +458,6 @@ output [data-visible] {
   border-style: solid inset outset solid;
   border-radius: 9%;
   color: var(--btn-txt);
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -508,26 +466,24 @@ output [data-visible] {
 button[data-operator] {
   border-color: var(--symbtn-border);
   background-color: var(--symbtn-bg);
-  font-size: calc(var(--base-font-size) * 1.75);
-  font-family: var(--italic-font, serif);
+  font-size: calc(var(--base-font-size) * 1.25);
+  font-family: var(--sec-font, sans-serif);
+  font-weight: 600;
 }
 
 button[data-operand] {
   border-color: var(--numbtn-border);
   background-color: var(--numbtn-bg);
   font-size: calc(var(--base-font-size) * 1.5); 
-  font-family: var(--reg-font, sans-serif);
-}
-
-/* corrects for blurring due to use of transform property on calculator */
-button[data-key="-"] {
-  font-weight: 600;
+  font-family: var(--pry-font, sans-serif);
 }
 
 .keypad button[data-hover],
 .keypad button:focus {
-  box-shadow: var(--btn-focus-border);
   font-weight: 900;
+  box-shadow: var(--btn-focus-border);
+  outline: 0.2rem dashed transparent;
+  outline-offset: 0.1rem;
 }
 
 button[data-operand][data-hover], 
@@ -540,39 +496,7 @@ button[data-operator]:focus {
   background-color: var(--symbtn-focus-bg);
 }
 
-/* contrast themes */
-@media (forced-colors: active) {
-  .switch {
-    border: 0.2rem solid;
-  }
- 
-  button[data-hover],
-  button:focus {
-    border-color: CanvasText;
-  }
-
-  button.open-dialog svg .icon-bg,
-  button.open-dialog svg .icon-keys {
-    fill: Canvas;
-  }
-  
-  button.open-dialog svg .icon-keys {
-    stroke: CanvasText;
-  }
-
-  button.open-dialog::after,
-  button.open-dialog[data-hover]::after,
-  button.open-dialog:focus::after {
-    background-color: CanvasText;
-  }
-
-  button.open-dialog[data-hover] .label,
-  button.open-dialog:focus .label {
-    border-color: CanvasText;
-    font-weight: 900;
-  }
-}
-
+/* ACCESSIBILITY QUERIES */
 @media (prefers-reduced-motion: no-preference) {
   .keypad button[data-active], 
   .keypad button:active {
@@ -583,7 +507,7 @@ button[data-operator]:focus {
 /* FOOTER */
 footer {
   padding-top: var(--base-spacing);
-  font-size: var(--base-font-size);
+  font-size: calc(var(--base-font-size)* 0.75);
 }
 
 
